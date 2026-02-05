@@ -1,0 +1,45 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Category": "Developer Tools",
+  "AlternateCategory": "Headless",
+  "Title": "Arroact Umbraco GraphQL",
+  "Description": "A powerful GraphQL API package for Umbraco with built-in authentication, interactive IDE dashboard, and comprehensive content/media querying capabilities. Features include lazy loading, BlockGrid support, MultiNodeTreePicker handling, and configurable API key authentication.",
+  "AuthorDetails": {
+    "Name": "Arroact Technologies Pvt. Ltd.",
+    "Description": "Arroact Technologies specializes in developing powerful tools and extensions for Umbraco CMS, helping businesses build better web experiences.",
+    "Url": "https://www.arroact.com",
+    "ImageUrl": "https://www.arroact.com/media/p0kfou1z/favicon.png"
+  },
+  "DocumentationUrl": "https://arroact.com/products/umbraco-graphql/documentation",
+  "LicenseTypes": [
+    "Free"
+  ],
+  "PackageType": "Package",
+  "Tags": [
+    "graphql",
+    "api",
+    "headless",
+    "developer tools",
+    "content api",
+    "media api",
+    "authentication",
+    "hotchocolate",
+    "blockgrid",
+    "lazy loading"
+  ],
+  "Screenshots": [
+    {
+      "ImageUrl": "https://www.arroact.com/media/ksahonuk/idegraphql01.png",
+      "Caption": "Interactive GraphQL IDE Dashboard with query builder, response viewer, and collapsible JSON tree"
+    },
+    {
+      "ImageUrl": "https://www.arroact.com/media/3r0nkkfv/idegraphql02.png",
+      "Caption": "Banana Cake Pop console for testing GraphQL queries with backoffice authentication"
+    },
+    {
+      "ImageUrl": "https://www.arroact.com/media/cadnrtxt/idegraphql03.png",
+      "Caption": "Easy API key configuration with helpful setup messages and auto-populated headers"
+    }
+  ],
+  "VersionDependencyMode": "Default"
+}
