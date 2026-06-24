@@ -39,7 +39,7 @@ Restart the application after changing configuration.
 - **GraphQL endpoint**: `/graphql`
 - **Umbraco backoffice IDE**: Go to the **Arroact GraphQL** section and open the **GraphQL IDE** dashboard.
 
-## What's New in Version 2.0.0
+## What's New in Version 3.0.0
 
 ### Child Content Filtering and Ordering
 You can now filter and order child content using powerful query arguments:
