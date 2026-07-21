@@ -28,6 +28,14 @@
     "lazy loading"
   ],
   "Screenshots": [
+	{
+	"VideoUrl": "https://www.youtube.com/watch?v=mwMZTkh7PqU&t",
+	"Caption": "Umbraco Headless CMS with GraphQL | Install Arroact.Umbraco.GraphQL & Build Queries"
+	},
+	{
+	"VideoUrl": "https://www.youtube.com/watch?v=rb5egxdjWFk&t",
+	"Caption": "Next.js Headless Starter with Umbraco | Download, Setup & Run Step-by-Step"
+	},
     {
       "ImageUrl": "https://www.arroact.com/media/ksahonuk/idegraphql01.png",
       "Caption": "Interactive GraphQL IDE Dashboard with query builder, response viewer, and collapsible JSON tree"
