@@ -68,7 +68,7 @@ The IDE is divided into three panels:
 The Builder panel reads the live schema via introspection and lets you construct queries visually.
 
 **How to use:**
-1. Expand a root query (e.g. `getContent`, `getContentById`, `getBlockGridById`)
+1. Expand a root query (e.g. `getContent`, `getMedia`, `getBlockGridById`)
 2. Check the checkbox next to it to select the operation
 3. Expand **[Arguments]** to see all available arguments for that operation
 4. Check scalar arguments (`id`, `culture`, `first`, `skip`) to include them in the query
@@ -147,6 +147,91 @@ Version 5 is compatible with Umbraco 18. For Umbraco 17 projects, use Version 4.
 
 Properties using `Umbraco.ElementPicker` are returned as structured element data. Both single and multiple selections are supported. Each selected element includes its `id`, `contentType`, optional `name`, and recursively resolved `properties`.
 
+### Property Filter Operators (`propertyOperator`)
+
+`where.propertyKey` / `where.propertyValue` filtering (on `getContent`, `getMedia`, and the `children` field) now supports a `propertyOperator` argument for comparisons beyond exact match:
+
+| Operator | Description |
+| --- | --- |
+| `EQUALS` (default) | Property value equals `propertyValue` (case-insensitive) |
+| `NOT_EQUALS` | Property value does not equal `propertyValue` |
+| `CONTAINS` | Property value contains `propertyValue` |
+| `STARTS_WITH` | Property value starts with `propertyValue` |
+| `ENDS_WITH` | Property value ends with `propertyValue` |
+| `GREATER_THAN` | Numeric/date/string comparison, greater than `propertyValue` |
+| `LESS_THAN` | Numeric/date/string comparison, less than `propertyValue` |
+
+**Example — find content where a property contains a substring:**
+```graphql
+query {
+  getContent(where: { propertyKey: "title", propertyValue: "summer", propertyOperator: CONTAINS }) {
+    name
+    properties {
+      key
+      value
+    }
+  }
+}
+```
+
+**Example — children with a property greater than a value:**
+```graphql
+query {
+  getContent(id: "your-content-id") {
+    name
+    children(
+      where: { propertyKey: "price", propertyValue: "100", propertyOperator: GREATER_THAN }
+    ) {
+      items {
+        name
+      }
+    }
+  }
+}
+```
+
+### Unified Content & Media Queries
+
+`getContent` and `getMedia` are now single, all-purpose queries. You can list items by `contentType`/`parentId`/`where`, or retrieve a specific item by `id`, `intId`, or `url` — all in the same operation.
+
+- **`contentType` / `parentId` / `where`**: List content/media
+- **`id` (UUID)**: Get a single item by its GUID key
+- **`intId` (Int)**: Get a single item by its integer ID
+- **`url` (String)**: Get a single item by its relative URL
+
+When `id`, `intId`, or `url` are provided, the result is a list containing zero or one matching items.
+
+**Example — get a content item by ID:**
+```graphql
+query {
+  getContent(id: "your-guid-key") {
+    name
+    properties {
+      key
+      value
+    }
+  }
+}
+```
+
+**Example — get a content item by URL:**
+```graphql
+query {
+  getContent(url: "/en/my-page") {
+    name
+  }
+}
+```
+
+**Example — get a media item by URL:**
+```graphql
+query {
+  getMedia(url: "/media/abc/my-image.png") {
+    name
+  }
+}
+```
+
 ### Child Content Filtering and Ordering
 You can now filter and order child content using powerful query arguments:
 
@@ -159,7 +244,7 @@ You can now filter and order child content using powerful query arguments:
 **Example Query:**
 ```graphql
 query {
-  contentById(id: "your-content-id") {
+  getContent(id: "your-content-id") {
     name
     children(
       first: 10,
@@ -178,6 +263,36 @@ query {
       pageInfo {
         hasNextPage
       }
+    }
+  }
+}
+```
+
+### Sort Operators (`orderBy` / `orderByProperty`)
+
+`children` results can be sorted using `orderBy` for built-in fields or `orderByProperty` for custom property values. Both use the `ASC` and `DESC` operators.
+
+| Operator | Description |
+| --- | --- |
+| `ASC` | Ascending order (A–Z, oldest–newest, 0–9) |
+| `DESC` | Descending order (Z–A, newest–oldest, 9–0) |
+
+Available `orderBy` fields: `name`, `createDate`, `updateDate`, `sortOrder`, `level`.
+
+**Example — sort children by name descending:**
+```graphql
+query {
+  getContent(id: "your-content-id") {
+    name
+    children(
+      first: 10,
+      orderBy: [{ name: DESC }]
+    ) {
+      items {
+        name
+        contentType
+      }
+      totalCount
     }
   }
 }
